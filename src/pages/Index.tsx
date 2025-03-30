@@ -5,7 +5,7 @@ import Dashboard from "@/components/Dashboard";
 import { vpnService } from "@/services/vpnService";
 import { authService } from "@/services/authService";
 import { useToast } from "@/components/ui/use-toast";
-import { Loader2 } from "lucide-react";
+import { Loader2, Gamepad } from "lucide-react";
 
 const Index = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
@@ -74,7 +74,7 @@ const Index = () => {
       setIsConnected(true);
       toast({
         title: "Connected",
-        description: "You are now securely connected to MindfulVPN",
+        description: "Shield activated. Your gaming session is now protected.",
       });
     } catch (error) {
       toast({
@@ -94,7 +94,7 @@ const Index = () => {
       setIsConnected(false);
       toast({
         title: "Disconnected",
-        description: "VPN connection terminated",
+        description: "Shield deactivated. Your connection is no longer protected.",
       });
     } catch (error) {
       toast({
@@ -120,10 +120,22 @@ const Index = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-blue-50 to-blue-100 dark:from-gray-900 dark:to-gray-800">
+      <div className="min-h-screen flex flex-col items-center justify-center bg-background">
         <div className="text-center">
-          <Loader2 className="h-8 w-8 animate-spin mx-auto text-primary" />
-          <p className="mt-4 text-muted-foreground">Please wait...</p>
+          <div className="relative">
+            <div className="bg-primary p-4 rounded-full glow-effect animate-pulse mb-6">
+              <Gamepad className="h-10 w-10 text-primary-foreground" />
+            </div>
+            <div className="absolute -top-2 -right-2 h-4 w-4 bg-accent rounded-full animate-ping"></div>
+          </div>
+          <h2 className="text-xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">GameGuardVPN</h2>
+          <div className="flex items-center justify-center space-x-1">
+            <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: "0ms" }}></div>
+            <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: "150ms" }}></div>
+            <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: "300ms" }}></div>
+            <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: "450ms" }}></div>
+          </div>
+          <p className="mt-4 text-muted-foreground">Initializing System...</p>
         </div>
       </div>
     );
