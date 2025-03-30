@@ -9,7 +9,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { Wifi, LogIn, User, Lock, Mail } from "lucide-react";
 
 interface AuthFormProps {
-  onLogin: (username: string, email: string, password: string) => void;
+  onLogin: (username: string, password: string) => void;
   onRegister: (username: string, email: string, password: string) => void;
 }
 
@@ -21,7 +21,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ onLogin, onRegister }) => {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!username || !email || !password) {
+    if (!username || !password) {
       toast({
         title: "Error",
         description: "Please fill in all fields",
@@ -29,7 +29,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ onLogin, onRegister }) => {
       });
       return;
     }
-    onLogin(username, email, password);
+    onLogin(username, password);
   };
 
   const handleRegister = (e: React.FormEvent) => {
@@ -85,22 +85,6 @@ const AuthForm: React.FC<AuthFormProps> = ({ onLogin, onRegister }) => {
                         onChange={(e) => setUsername(e.target.value)}
                         className="pl-10"
                         placeholder="Enter your username"
-                      />
-                    </div>
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="email">Email</Label>
-                    <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <Mail className="h-4 w-4 text-muted-foreground" />
-                      </div>
-                      <Input 
-                        id="email" 
-                        type="email" 
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        className="pl-10"
-                        placeholder="Enter your email"
                       />
                     </div>
                   </div>

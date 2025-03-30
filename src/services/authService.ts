@@ -11,11 +11,11 @@ interface User {
 const users: User[] = [];
 
 export const authService = {
-  login: (username: string, email: string, password: string): Promise<string> => {
+  login: (username: string, password: string): Promise<string> => {
     return new Promise((resolve, reject) => {
       // For demo purposes, find user with matching credentials
       const user = users.find(u => 
-        (u.username === username || u.email === email) && 
+        u.username === username && 
         u.password === password
       );
       
