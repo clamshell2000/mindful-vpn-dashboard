@@ -6,21 +6,22 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/components/ui/use-toast";
-import { Wifi, LogIn, User, Lock } from "lucide-react";
+import { Wifi, LogIn, User, Lock, Mail } from "lucide-react";
 
 interface AuthFormProps {
-  onLogin: (username: string, password: string) => void;
-  onRegister: (username: string, password: string) => void;
+  onLogin: (username: string, email: string, password: string) => void;
+  onRegister: (username: string, email: string, password: string) => void;
 }
 
 const AuthForm: React.FC<AuthFormProps> = ({ onLogin, onRegister }) => {
   const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { toast } = useToast();
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!username || !password) {
+    if (!username || !email || !password) {
       toast({
         title: "Error",
         description: "Please fill in all fields",
@@ -28,12 +29,12 @@ const AuthForm: React.FC<AuthFormProps> = ({ onLogin, onRegister }) => {
       });
       return;
     }
-    onLogin(username, password);
+    onLogin(username, email, password);
   };
 
   const handleRegister = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!username || !password) {
+    if (!username || !email || !password) {
       toast({
         title: "Error",
         description: "Please fill in all fields",
@@ -41,7 +42,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ onLogin, onRegister }) => {
       });
       return;
     }
-    onRegister(username, password);
+    onRegister(username, email, password);
   };
 
   return (
@@ -84,6 +85,22 @@ const AuthForm: React.FC<AuthFormProps> = ({ onLogin, onRegister }) => {
                         onChange={(e) => setUsername(e.target.value)}
                         className="pl-10"
                         placeholder="Enter your username"
+                      />
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="email">Email</Label>
+                    <div className="relative">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <Mail className="h-4 w-4 text-muted-foreground" />
+                      </div>
+                      <Input 
+                        id="email" 
+                        type="email" 
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        className="pl-10"
+                        placeholder="Enter your email"
                       />
                     </div>
                   </div>
@@ -134,6 +151,22 @@ const AuthForm: React.FC<AuthFormProps> = ({ onLogin, onRegister }) => {
                         onChange={(e) => setUsername(e.target.value)}
                         className="pl-10"
                         placeholder="Choose a username"
+                      />
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="new-email">Email</Label>
+                    <div className="relative">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <Mail className="h-4 w-4 text-muted-foreground" />
+                      </div>
+                      <Input 
+                        id="new-email" 
+                        type="email" 
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        className="pl-10"
+                        placeholder="Enter your email"
                       />
                     </div>
                   </div>

@@ -23,10 +23,10 @@ const Index = () => {
     }
   }, []);
 
-  const handleLogin = async (username: string, password: string) => {
+  const handleLogin = async (username: string, email: string, password: string) => {
     setIsLoading(true);
     try {
-      const user = await authService.login(username, password);
+      const user = await authService.login(username, email, password);
       setUsername(user);
       setIsAuthenticated(true);
       localStorage.setItem("vpn_user", user);
@@ -45,10 +45,10 @@ const Index = () => {
     }
   };
 
-  const handleRegister = async (username: string, password: string) => {
+  const handleRegister = async (username: string, email: string, password: string) => {
     setIsLoading(true);
     try {
-      const user = await authService.register(username, password);
+      const user = await authService.register(username, email, password);
       setUsername(user);
       setIsAuthenticated(true);
       localStorage.setItem("vpn_user", user);

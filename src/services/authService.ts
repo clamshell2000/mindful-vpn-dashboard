@@ -3,6 +3,7 @@
 
 interface User {
   username: string;
+  email: string;
   password: string;
 }
 
@@ -10,15 +11,18 @@ interface User {
 const users: User[] = [];
 
 export const authService = {
-  login: (username: string, password: string): Promise<string> => {
+  login: (username: string, email: string, password: string): Promise<string> => {
     return new Promise((resolve, reject) => {
       // For demo purposes, find user with matching credentials
-      const user = users.find(u => u.username === username && u.password === password);
+      const user = users.find(u => 
+        (u.username === username || u.email === email) && 
+        u.password === password
+      );
       
       if (user) {
         // Simulate API delay
         setTimeout(() => {
-          resolve(username);
+          resolve(user.username);
         }, 1000);
       } else {
         // Check if we should auto-login for demo
@@ -28,16 +32,16 @@ export const authService = {
           }, 1000);
         } else {
           setTimeout(() => {
-            reject(new Error("Invalid username or password"));
+            reject(new Error("Invalid credentials"));
           }, 1000);
         }
       }
     });
   },
   
-  register: (username: string, password: string): Promise<string> => {
+  register: (username: string, email: string, password: string): Promise<string> => {
     return new Promise((resolve, reject) => {
-      // Check if username already exists
+      // Check if username or email already exists
       if (users.some(u => u.username === username)) {
         setTimeout(() => {
           reject(new Error("Username already exists"));
@@ -45,8 +49,15 @@ export const authService = {
         return;
       }
       
+      if (users.some(u => u.email === email)) {
+        setTimeout(() => {
+          reject(new Error("Email already exists"));
+        }, 1000);
+        return;
+      }
+      
       // Add new user
-      users.push({ username, password });
+      users.push({ username, email, password });
       
       // Simulate API delay
       setTimeout(() => {
